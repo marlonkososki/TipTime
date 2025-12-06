@@ -30,8 +30,13 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        val formattedTip = NumberFormat.getCurrencyInstance().format(0)
-        binding.tipResult.text = getString(R.string.tip_amount_0_00, formattedTip)
+        if (savedInstanceState != null){
+            binding.tipResult.text = savedInstanceState.getString("cost_of_tip")
+        } else {
+            val formattedTip = NumberFormat.getCurrencyInstance().format(0)
+            binding.tipResult.text = getString(R.string.tip_amount_0_00, formattedTip)
+        }
+
     }
 
     private fun calculateTip() {
@@ -55,6 +60,13 @@ class MainActivity : AppCompatActivity() {
         val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
         binding.tipResult.text = getString(R.string.tip_amount_0_00, formattedTip)
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("cost_of_tip", binding.tipResult.text.toString())
+    }
+
 }
 
 
